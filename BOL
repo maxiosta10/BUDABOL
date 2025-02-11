@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill of Lading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #000;
+            width: 794px;
+            height: 1123px;
+        }
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            width: 150px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .column {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Bill of Lading</h2>
+        <img src="BUDA.png" alt="Buda Juice Logo" class="logo">
+    </div>
+    
+    <div class="container">
+        <div class="column">
+            <div class="section">
+                <table>
+                    <tr><th>Ship From</th></tr>
+                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
+                    <tr><th>Ship To</th></tr>
+                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
+                    <tr><th>Third Party Freight Charges</th></tr>
+                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="column">
+            <div class="section">
+                <table>
+                    <tr><th>Bill of Lading Number</th></tr>
+                    <tr><td>___________</td></tr>
+                    <tr><th>Carrier Information</th></tr>
+                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <table>
+            <tr>
+                <th>Handling Unit</th>
+                <th>Package</th>
+                <th>Commodity Description</th>
+                <th>Weight</th>
+            </tr>
+            <tr>
+                <td>___________</td>
+                <td>___________</td>
+                <td>___________</td>
+                <td>___________</td>
+            </tr>
+        </table>
+    </div>
+    
+    <p>Shipper Signature: ______________________ Date: ___________</p>
+    <p>Carrier Signature: ______________________ Date: ___________</p>
+</body>
+</html>

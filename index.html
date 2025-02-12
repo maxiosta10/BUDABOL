@@ -36,7 +36,7 @@
             align-items: center;
         }
         .logo {
-            width: 120px; /* Ajusta el tamaño de la imagen */
+            width: 80px;
         }
         .container {
             display: flex;
@@ -45,59 +45,73 @@
         .column {
             width: 48%;
         }
+        .print-button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .print-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+
     <div class="header">
         <h2>Bill of Lading</h2>
-        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo">
+        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="80" height="50">
     </div>
-    
-    <div class="container">
-        <div class="column">
-            <div class="section">
-                <table>
-                    <tr><th>Ship From</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
-                    <tr><th>Ship To</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
-                    <tr><th>Third Party Freight Charges</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
-                </table>
-            </div>
-        </div>
-        
-        <div class="column">
-            <div class="section">
-                <table>
-                    <tr><th>Bill of Lading Number</th></tr>
-                    <tr><td>___________</td></tr>
-                    <tr><th>Carrier Information</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
-                </table>
-            </div>
-        </div>
-    </div>
-    
+
+    <button class="print-button" onclick="window.print()">Imprimir PDF</button>
+
     <div class="section">
-        <table>
-            <tr>
-                <th>Handling Unit</th>
-                <th>Package</th>
-                <th>Commodity Description</th>
-                <th>Weight</th>
-            </tr>
-            <tr>
-                <td>___________</td>
-                <td>___________</td>
-                <td>___________</td>
-                <td>___________</td>
-            </tr>
+        <h3>Detalles de la Carga</h3>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Datos dinámicos desde la URL -->
+            </tbody>
         </table>
     </div>
-    
-    <p>Shipper Signature: ______________________ Date: ___________</p>
-    <p>Carrier Signature: ______________________ Date: ___________</p>
+
+    <script>
+        // Función para obtener parámetros de la URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const conceptos = params.get("conceptos") ? decodeURIComponent(params.get("conceptos")).split(",") : [];
+            const montos = params.get("montos") ? decodeURIComponent(params.get("montos")).split(",") : [];
+            return { conceptos, montos };
+        }
+
+        function cargarDatosDesdeURL() {
+            const { conceptos, montos } = getQueryParams();
+            const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
+
+            if (conceptos.length === montos.length) {
+                for (let i = 0; i < conceptos.length; i++) {
+                    let tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${conceptos[i]}</td><td>${montos[i]}</td>`;
+                    tbody.appendChild(tr);
+                }
+            } else {
+                console.error("Los datos de conceptos y montos no coinciden.");
+            }
+        }
+
+        // Cargar datos al abrir la página
+        cargarDatosDesdeURL();
+    </script>
+
 </body>
 </html>
 

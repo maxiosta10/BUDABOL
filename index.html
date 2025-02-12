@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,39 +14,49 @@
             width: 794px;
             height: 1123px;
         }
+
         h2 {
             text-align: center;
             text-transform: uppercase;
             font-weight: bold;
             flex-grow: 1;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         .section {
             margin-bottom: 20px;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .logo {
             width: 80px;
         }
+
         .container {
             display: flex;
             justify-content: space-between;
         }
+
         .column {
             width: 48%;
         }
+
         .print-button {
             display: block;
             margin: 10px auto;
@@ -56,39 +67,62 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         .print-button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
         <h2>Bill of Lading</h2>
-        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="180" height="70">
+        <div></div>
+        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="200px" height="auto">
     </div>
 
     <div class="container">
         <div class="column">
             <div class="section">
                 <table>
-                    <tr><th>Ship From</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
-                    <tr><th>Ship To</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
-                    <tr><th>Third Party Freight Charges</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
+                    <tr>
+                        <th>Ship From</th>
+                    </tr>
+                    <tr>
+                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                    </tr>
+                    <tr>
+                        <th>Ship To</th>
+                    </tr>
+                    <tr>
+                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                    </tr>
+                    <tr>
+                        <th>Third Party Freight Charges</th>
+                    </tr>
+                    <tr>
+                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                    </tr>
                 </table>
             </div>
         </div>
-        
+
         <div class="column">
             <div class="section">
                 <table>
-                    <tr><th>Bill of Lading Number</th></tr>
-                    <tr><td>___________</td></tr>
-                    <tr><th>Carrier Information</th></tr>
-                    <tr><td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td></tr>
+                    <tr>
+                        <th>Bill of Lading Number</th>
+                    </tr>
+                    <tr>
+                        <td>___________</td>
+                    </tr>
+                    <tr>
+                        <th>Carrier Information</th>
+                    </tr>
+                    <tr>
+                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -99,9 +133,10 @@
         <table id="data-table">
             <thead>
                 <tr>
-                    <th>Pallet</th>
-                    <th>Package</th>
-                    <th>Commodity Description</th>
+                    <th>Pallet #</th>
+                    <th>Quantity</th>
+                    <th>Product Name</th>
+                    <th>Cases</th>
                     <th>Weight</th>
                 </tr>
             </thead>
@@ -114,46 +149,47 @@
     <p>Shipper Signature: ______________________ Date: ___________</p>
     <p>Carrier Signature: ______________________ Date: ___________</p>
 
-      <div style="text-align: center; margin-top: 20px;">
+
+    <div style="text-align: center; margin-top: 100px;">
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
-   <script>
-    function obtenerParametros(url) {
-        const params = new URLSearchParams(url);
-        // Suponiendo que 'pallets' contiene los datos separados por comas
-        return {
-            pallets: params.get('pallets').split(',')
-        };
-    }
+    <script>
+        function obtenerParametros(url) {
+            const params = new URLSearchParams(url);
+            // Suponiendo que 'pallets' contiene los datos separados por comas
+            return {
+                pallets: params.get('pallets').split(',')
+                items: params.get('items').split(',')
+            };
+        }
 
-    // Obtener los parámetros de la URL
-    const parametros = obtenerParametros(window.location.search);
+        // Obtener los parámetros de la URL
+        const parametros = obtenerParametros(window.location.search);
 
-    // Suponiendo que los datos de los pallets están estructurados correctamente,
-    // ahora vamos a cargarlos en la tabla.
-    const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
+        // Suponiendo que los datos de los pallets están estructurados correctamente,
+        // ahora vamos a cargarlos en la tabla.
+        const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
 
-    // Verificar que tienes los datos
-    if (parametros.pallets && parametros.pallets.length > 0) {
-        parametros.pallets.forEach(pallet => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
+        // Verificar que tienes los datos
+        if (parametros.pallets && parametros.pallets.length > 0) {
+            parametros.pallets.forEach(pallet => {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
                 <td>${pallet || ''}</td>
                 <td>Package Data</td>  <!-- Aquí deberías incluir datos relacionados con el Package -->
-                <td>CommodityDescription Data</td>  <!-- Aquí deberías incluir la descripción del commodity -->
+                <td>${items || ''}</td>  <!-- Aquí deberías incluir la descripción del commodity -->
                 <td>Weight Data</td>  <!-- Aquí deberías incluir el peso -->
             `;
-            tbody.appendChild(tr);
-        });
-    } else {
-        console.log("No se encontraron pallets.");
-    }
+                tbody.appendChild(tr);
+            });
+        } else {
+            console.log("No se encontraron pallets.");
+        }
 
-    // Si quieres imprimir la página automáticamente al cargarla, como en tu ejemplo
-    window.print();
-</script>
+        // Si quieres imprimir la página automáticamente al cargarla, como en tu ejemplo
+        window.print();
+    </script>
 
 </body>
+
 </html>
-
-

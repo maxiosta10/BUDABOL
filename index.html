@@ -68,8 +68,6 @@
         <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="120" height="70">
     </div>
 
-    <button class="print-button" onclick="window.print()">Print</button>
-
     <div class="container">
         <div class="column">
             <div class="section">
@@ -116,6 +114,9 @@
     <p>Shipper Signature: ______________________ Date: ___________</p>
     <p>Carrier Signature: ______________________ Date: ___________</p>
 
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="print-button" onclick="window.print()">Print</button>
+    </div>
     <script>
         // URL de AppSheet con los datos de pallets
         const url = "https://maxiosta10.github.io/BUDABOL/?pallets=" + encodeURIComponent(JSON.stringify(SELECT(Pallets[Pallet], TRUE)));

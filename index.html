@@ -117,35 +117,41 @@
       <div style="text-align: center; margin-top: 20px;">
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
-    <script>
-        // URL de AppSheet con los datos de pallets
-        const url = "https://maxiosta10.github.io/BUDABOL/?pallets=" + encodeURIComponent(JSON.stringify(SELECT(Pallets[Pallet], TRUE)));
+   <script>
+    function obtenerParametros(url) {
+        const params = new URLSearchParams(url);
+        // Suponiendo que 'pallets' contiene los datos separados por comas
+        return {
+            pallets: params.get('pallets').split(',')
+        };
+    }
 
-        async function cargarDatos() {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
+    // Obtener los parámetros de la URL
+    const parametros = obtenerParametros(window.location.search);
 
-                const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
+    // Suponiendo que los datos de los pallets están estructurados correctamente,
+    // ahora vamos a cargarlos en la tabla.
+    const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
 
-                data.forEach(row => {
-                    let tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${row.Pallet || ''}</td>
-                        <td>${row.Package || ''}</td>
-                        <td>${row.CommodityDescription || ''}</td>
-                        <td>${row.Weight || ''}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error("Error cargando datos de AppSheet:", error);
-            }
-        }
+    // Verificar que tienes los datos
+    if (parametros.pallets && parametros.pallets.length > 0) {
+        parametros.pallets.forEach(pallet => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${pallet || ''}</td>
+                <td>Package Data</td>  <!-- Aquí deberías incluir datos relacionados con el Package -->
+                <td>CommodityDescription Data</td>  <!-- Aquí deberías incluir la descripción del commodity -->
+                <td>Weight Data</td>  <!-- Aquí deberías incluir el peso -->
+            `;
+            tbody.appendChild(tr);
+        });
+    } else {
+        console.log("No se encontraron pallets.");
+    }
 
-        // Cargar datos cuando se abre la página
-        cargarDatos();
-    </script>
+    // Si quieres imprimir la página automáticamente al cargarla, como en tu ejemplo
+    window.print();
+</script>
 
 </body>
 </html>

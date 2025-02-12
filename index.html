@@ -154,41 +154,40 @@
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
     <script>
-        function obtenerParametros(url) {
-            const params = new URLSearchParams(url);
-            // Suponiendo que 'pallets' contiene los datos separados por comas
-            return {
-                pallets: params.get('pallets').split(',')
-                items: params.get('items').split(',')
-            };
-        }
+    function obtenerParametros(url) {
+        const params = new URLSearchParams(url);
+        return {
+            pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
+            items: params.get('items') ? params.get('items').split(',') : []
+        };
+    }
 
-        // Obtener los parámetros de la URL
-        const parametros = obtenerParametros(window.location.search);
+    // Obtener los parámetros de la URL
+    const parametros = obtenerParametros(window.location.search);
 
-        // Suponiendo que los datos de los pallets están estructurados correctamente,
-        // ahora vamos a cargarlos en la tabla.
-        const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
+    // Obtener referencia a la tabla
+    const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
 
-        // Verificar que tienes los datos
-        if (parametros.pallets && parametros.pallets.length > 0) {
-            parametros.pallets.forEach(pallet => {
-                let tr = document.createElement("tr");
-                tr.innerHTML = `
-                <td>${pallet || ''}</td>
-                <td>Package Data</td>  <!-- Aquí deberías incluir datos relacionados con el Package -->
-                <td>${items || ''}</td>  <!-- Aquí deberías incluir la descripción del commodity -->
-                <td>Weight Data</td>  <!-- Aquí deberías incluir el peso -->
+    // Verificar que hay datos en ambos arrays y que tienen la misma cantidad de elementos
+    if (parametros.pallets.length > 0 && parametros.items.length > 0) {
+        for (let i = 0; i < parametros.pallets.length; i++) {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${parametros.pallets[i] || ''}</td>
+                <td>Package Data</td>
+                <td>${parametros.items[i] || ''}</td>
+                <td>Weight Data</td>
             `;
-                tbody.appendChild(tr);
-            });
-        } else {
-            console.log("No se encontraron pallets.");
+            tbody.appendChild(tr);
         }
+    } else {
+        console.log("No se encontraron pallets o items.");
+    }
 
-        // Si quieres imprimir la página automáticamente al cargarla, como en tu ejemplo
-        window.print();
-    </script>
+    // Imprimir automáticamente
+    window.print();
+</script>
+
 
 </body>
 

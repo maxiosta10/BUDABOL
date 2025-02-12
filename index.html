@@ -17,6 +17,7 @@
             text-align: center;
             text-transform: uppercase;
             font-weight: bold;
+            flex-grow: 1;
         }
         table {
             width: 100%;
@@ -32,7 +33,7 @@
         }
         .header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
         .logo {
@@ -64,10 +65,10 @@
 
     <div class="header">
         <h2>Bill of Lading</h2>
-        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="80" height="50">
+        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="100" height="70">
     </div>
 
-    <button class="print-button" onclick="window.print()">Imprimir PDF</button>
+    <button class="print-button" onclick="window.print()">Print</button>
 
     <div class="container">
         <div class="column">
@@ -100,7 +101,7 @@
         <table id="data-table">
             <thead>
                 <tr>
-                    <th>Handling Unit</th>
+                    <th>Pallet</th>
                     <th>Package</th>
                     <th>Commodity Description</th>
                     <th>Weight</th>
@@ -116,8 +117,8 @@
     <p>Carrier Signature: ______________________ Date: ___________</p>
 
     <script>
-        // URL de AppSheet que obtiene los datos (AJUSTA ESTO SEGÚN TU APP)
-        const url = "https://api.appsheet.com/api/v2/apps/tu-app-id/tables/TuTabla/rows?filter=SELECT(...)";
+        // URL de AppSheet con los datos de pallets
+        const url = "https://maxiosta10.github.io/BUDABOL/?pallets=" + encodeURIComponent(JSON.stringify(SELECT(Pallets[Pallet], TRUE)));
 
         async function cargarDatos() {
             try {
@@ -129,7 +130,7 @@
                 data.forEach(row => {
                     let tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td>${row.HandlingUnit || ''}</td>
+                        <td>${row.Pallet || ''}</td>
                         <td>${row.Package || ''}</td>
                         <td>${row.CommodityDescription || ''}</td>
                         <td>${row.Weight || ''}</td>
@@ -147,4 +148,5 @@
 
 </body>
 </html>
+
 

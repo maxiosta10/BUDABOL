@@ -89,17 +89,40 @@
             bottom: 10px;
             right: 20px;
         }
+
+        @media print {
+            th {
+                background-color: #000 !important; /* Asegura que el fondo negro se mantenga */
+                color: white !important; /* Asegura que el texto sea blanco */
+            }
+
+            body {
+                width: 100%; /* Asegura que la página ocupe todo el ancho de la impresora */
+            }
+
+            .logo {
+                width: 50px; /* Reducir el logo en la impresión si es necesario */
+            }
+
+            .print-button {
+                display: none; /* Ocultar el botón de imprimir en la versión impresa */
+            }
+
+            .small-text {
+                display: none; /* Ocultar el texto pequeño en la versión impresa */
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="header">
+    <div class="header" style="margin-bottom: 10px;">
         <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo">
         <h2>Bill of Lading</h2>
     </div>
 
-    <div class="details">
+    <div class="details" style="margin-bottom: 10px;">
         <div>Date: <span id="date">___________</span></div>
     </div>
 

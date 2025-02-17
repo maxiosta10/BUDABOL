@@ -22,6 +22,7 @@
             align-items: center;
             padding-bottom: 10px;
             border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
         }
 
         h2 {
@@ -34,7 +35,7 @@
         }
 
         .logo {
-            width: 100px; /* Logo más chico */
+            width: 100px;
             height: auto;
         }
 
@@ -43,9 +44,10 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #bbb;
-            padding: 6px; /* Ajuste de padding para mayor consistencia */
+            padding: 6px;
             text-align: left;
         }
 
@@ -90,39 +92,42 @@
             right: 20px;
         }
 
+        /* Estilo para impresión */
         @media print {
-            th {
-                background-color: #000 !important; /* Asegura que el fondo negro se mantenga */
-                color: white !important; /* Asegura que el texto sea blanco */
-            }
-
             body {
-                width: 100%; /* Asegura que la página ocupe todo el ancho de la impresora */
+                margin: 0;
+                padding: 0;
             }
 
-            .logo {
-                width: 50px; /* Reducir el logo en la impresión si es necesario */
+            th {
+                background-color: #000 !important;
+                color: white !important;
+            }
+
+            td {
+                color: black !important; /* Si decides cambiar a texto negro en la impresión */
+            }
+
+            .header h2 {
+                color: black !important; /* Asegura que el título sea visible en la impresión */
             }
 
             .print-button {
-                display: none; /* Ocultar el botón de imprimir en la versión impresa */
-            }
-
-            .small-text {
-                display: none; /* Ocultar el texto pequeño en la versión impresa */
+                display: none; /* Oculta el botón de impresión en la impresión */
             }
         }
+
     </style>
 </head>
 
 <body>
 
-    <div class="header" style="margin-bottom: 10px;">
+    <div class="header">
         <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo">
         <h2>Bill of Lading</h2>
     </div>
 
-    <div class="details" style="margin-bottom: 10px;">
+    <div class="details">
         <div>Date: <span id="date">___________</span></div>
     </div>
 
@@ -195,7 +200,7 @@
         </table>
     </div>
 
-    <p>Shipper Signature: <span id="completedBy">_____________________</span> Date: ___________</p>
+    <p>Shipper Signature:  <span id="completedBy">_____________________</span> Date: ___________</p>
     <p>Carrier Signature: ______________________ Date: ___________</p>
 
     <div style="text-align: center; margin-top: 100px;">

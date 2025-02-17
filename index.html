@@ -13,12 +13,29 @@
             border: 1px solid #ccc;
             width: 794px;
             height: 1123px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
         }
 
         h2 {
             text-align: center;
             text-transform: uppercase;
             font-weight: bold;
+            font-size: 20px;
+            margin: 0 auto;
+            flex-grow: 1;
+        }
+
+        .logo {
+            width: 100px; /* Logo más chico */
+            height: auto;
         }
 
         table {
@@ -28,7 +45,7 @@
 
         th, td {
             border: 1px solid #bbb;
-            padding: 8px;
+            padding: 6px; /* Ajuste de padding para mayor consistencia */
             text-align: left;
         }
 
@@ -38,13 +55,7 @@
         }
 
         .section {
-            margin-bottom: 20px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 15px;
         }
 
         .container {
@@ -70,14 +81,22 @@
         .print-button:hover {
             background-color: #0056b3;
         }
+
+        .small-text {
+            font-size: 12px;
+            text-align: right;
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="header">
+        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo">
         <h2>Bill of Lading</h2>
-        <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="200px" height="auto">
     </div>
 
     <div class="details">
@@ -123,7 +142,7 @@
                         <th>Carrier Information</th>
                     </tr>
                     <tr>
-                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                        <td>Name:<span id="driverName">___________</span><br>Address: ___________<br>City/State/Zip: ___________</td>
                     </tr>
                 </table>
             </div>
@@ -153,12 +172,14 @@
         </table>
     </div>
 
-    <p>Shipper Signature: ______________________ Date: ___________</p>
+    <p>Shipper Signature: <span id="completedBy">_____________________</span> Date: ___________</p>
     <p>Carrier Signature: ______________________ Date: ___________</p>
 
     <div style="text-align: center; margin-top: 100px;">
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
+
+    <div class="small-text" id="pageNumber"></div>
 
     <script>
     function obtenerParametros(url) {
@@ -171,6 +192,8 @@
             shipTo: params.get('shipTo') || '___________',
             number: params.get('number') || '___________',
             specialInstructions: params.get('specialInstructions') || '_________________________________________',
+            driverName: params.get('driverName') || '_________________________________________',
+            completedBy: params.get('completedBy') || '_________________________________________',
             pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
             items: params.get('items') ? params.get('items').split(',') : [],
             quantity: params.get('quantity') ? params.get('quantity').split(',') : [],
@@ -189,6 +212,8 @@
     document.getElementById("fromName").textContent = parametros.fromName;
     document.getElementById("shipTo").textContent = parametros.shipTo;
     document.getElementById("number").textContent = parametros.number;
+    document.getElementById("driverName").textContent = parametros.driverName;
+    document.getElementById("completedBy").textContent = parametros.completedBy;
     document.getElementById("specialInstructions").textContent = parametros.specialInstructions;
 
     // Obtener referencia a la tabla
@@ -209,6 +234,9 @@
         }
     }
 
+    // Número de página
+    document.getElementById("pageNumber").textContent = "Page 1 of X";
+
     // Imprimir automáticamente
     window.print();
 </script>
@@ -216,4 +244,3 @@
 </body>
 
 </html>
-

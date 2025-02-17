@@ -90,7 +90,7 @@
                         <th>Ship From</th>
                     </tr>
                     <tr>
-                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                        <td>Name: <span id="fromName">___________</span><br>Address: ___________<br>City/State/Zip: ___________</td>
                     </tr>
                     <tr>
                         <th>Ship To</th>
@@ -149,7 +149,6 @@
     <p>Shipper Signature: ______________________ Date: ___________</p>
     <p>Carrier Signature: ______________________ Date: ___________</p>
 
-
     <div style="text-align: center; margin-top: 100px;">
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
@@ -158,12 +157,16 @@
         const params = new URLSearchParams(url);
         return {
             pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
-            items: params.get('items') ? params.get('items').split(',') : []
+            items: params.get('items') ? params.get('items').split(',') : [],
+            fromName: params.get('fromName') || '___________'
         };
     }
 
     // Obtener los parámetros de la URL
     const parametros = obtenerParametros(window.location.search);
+
+    // Insertar el valor de fromName en el documento
+    document.getElementById("fromName").innerText = parametros.fromName;
 
     // Obtener referencia a la tabla
     const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
@@ -186,8 +189,7 @@
 
     // Imprimir automáticamente
     window.print();
-</script>
-
+    </script>
 
 </body>
 

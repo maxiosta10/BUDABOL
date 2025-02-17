@@ -96,7 +96,7 @@
                         <th>Ship To</th>
                     </tr>
                     <tr>
-                         <td>Name: <span id="shipTo">___________</span><br>Address: ___________<br>City/State/Zip: ___________</td>
+                        <td>Name: <span id="shipTo">___________</span><br>Address: ___________<br>City/State/Zip: ___________</td>
                     </tr>
                     <tr>
                         <th>Third Party Freight Charges</th>
@@ -152,24 +152,25 @@
     <div style="text-align: center; margin-top: 100px;">
         <button class="print-button" onclick="window.print()">Print</button>
     </div>
+
     <script>
     function obtenerParametros(url) {
         const params = new URLSearchParams(url);
         return {
-            pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
-            items: params.get('items') ? params.get('items').split(',') : [],
             fromName: params.get('fromName') || '___________',
-            toName: params.get('toName') || '___________',
-            number: params.get('number') || '___________'
+            shipTo: params.get('shipTo') || '___________',
+            number: params.get('number') || '___________',
+            pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
+            items: params.get('items') ? params.get('items').split(',') : []
         };
     }
 
     // Obtener los parámetros de la URL
     const parametros = obtenerParametros(window.location.search);
 
-    // Insertar el valor de fromName en el documento
-    document.getElementById("fromName").innerText = parametros.fromName;
-    document.getElementById("toName").textContent = parametros.shipTo;
+    // Insertar valores en los lugares correspondientes
+    document.getElementById("fromName").textContent = parametros.fromName;
+    document.getElementById("shipTo").textContent = parametros.shipTo;
     document.getElementById("number").textContent = parametros.number;
 
     // Obtener referencia a la tabla
@@ -193,7 +194,7 @@
 
     // Imprimir automáticamente
     window.print();
-    </script>
+</script>
 
 </body>
 

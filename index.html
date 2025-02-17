@@ -96,7 +96,7 @@
                         <th>Ship To</th>
                     </tr>
                     <tr>
-                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
+                         <td>Name: <span id="shipTo">___________</span><br>Address: ___________<br>City/State/Zip: ___________</td>
                     </tr>
                     <tr>
                         <th>Third Party Freight Charges</th>
@@ -115,7 +115,7 @@
                         <th>Bill of Lading Number</th>
                     </tr>
                     <tr>
-                        <td>___________</td>
+                        <td><span id="number">___________</span></td>
                     </tr>
                     <tr>
                         <th>Carrier Information</th>
@@ -158,7 +158,9 @@
         return {
             pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
             items: params.get('items') ? params.get('items').split(',') : [],
-            fromName: params.get('fromName') || '___________'
+            fromName: params.get('fromName') || '___________',
+            toName: params.get('toName') || '___________',
+            number: params.get('number') || '___________'
         };
     }
 
@@ -167,6 +169,8 @@
 
     // Insertar el valor de fromName en el documento
     document.getElementById("fromName").innerText = parametros.fromName;
+    document.getElementById("toName").textContent = parametros.shipTo;
+    document.getElementById("number").textContent = parametros.number;
 
     // Obtener referencia a la tabla
     const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];

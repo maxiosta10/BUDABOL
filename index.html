@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
-            border: 1px solid #000;
+            border: 1px solid #ccc;
             width: 794px;
             height: 1123px;
         }
@@ -19,7 +19,6 @@
             text-align: center;
             text-transform: uppercase;
             font-weight: bold;
-            flex-grow: 1;
         }
 
         table {
@@ -27,11 +26,15 @@
             border-collapse: collapse;
         }
 
-        th,
-        td {
-            border: 1px solid black;
+        th, td {
+            border: 1px solid #bbb;
             padding: 8px;
             text-align: left;
+        }
+
+        th {
+            background-color: #000;
+            color: white;
         }
 
         .section {
@@ -42,10 +45,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .logo {
-            width: 80px;
         }
 
         .container {
@@ -78,8 +77,11 @@
 
     <div class="header">
         <h2>Bill of Lading</h2>
-        <div></div>
         <img src="https://github.com/maxiosta10/BUDABOL/blob/main/BUDA.png?raw=true" alt="Buda Juice Logo" class="logo" width="200px" height="auto">
+    </div>
+
+    <div class="details">
+        <div>Date: <span id="date">___________</span></div>
     </div>
 
     <div class="container">
@@ -98,12 +100,6 @@
                     <tr>
                         <td>Name: <span id="shipTo">___________</span><br>Address: ___________<br>City/State/Zip: ___________</td>
                     </tr>
-                    <tr>
-                        <th>Third Party Freight Charges</th>
-                    </tr>
-                    <tr>
-                        <td>Name: ___________<br>Address: ___________<br>City/State/Zip: ___________</td>
-                    </tr>
                 </table>
             </div>
         </div>
@@ -112,10 +108,16 @@
             <div class="section">
                 <table>
                     <tr>
-                        <th>Bill of Lading Number</th>
+                        <th>Bill of Lading No</th>
                     </tr>
                     <tr>
-                        <td><span id="number">___________</span></td>
+                        <td>No: <span id="number">___________</span></td>
+                    </tr>
+                    <tr>
+                        <td>Seal Number: <span id="sealNumber">___________</span></td>
+                    </tr>
+                    <tr>
+                        <td>Total Load: <span id="totalLoad">___________</span></td>
                     </tr>
                     <tr>
                         <th>Carrier Information</th>
@@ -129,14 +131,19 @@
     </div>
 
     <div class="section">
+        <h3>Special Instructions</h3>
+        <p id="specialInstructions">_________________________________________</p>
+    </div>
+
+    <div class="section">
         <h3>Load Details</h3>
         <table id="data-table">
             <thead>
                 <tr>
                     <th>Pallet #</th>
-                    <th>Quantity</th>
                     <th>Product Name</th>
-                    <th>Cases</th>
+                    <th>Quantity</th>
+                    <th>Load Time</th>
                     <th>Weight</th>
                 </tr>
             </thead>
@@ -157,11 +164,18 @@
     function obtenerParametros(url) {
         const params = new URLSearchParams(url);
         return {
+            date: params.get('date') || '___________',
+            sealNumber: params.get('sealNumber') || '___________',
+            totalLoad: params.get('totalLoad') || '___________',
             fromName: params.get('fromName') || '___________',
             shipTo: params.get('shipTo') || '___________',
             number: params.get('number') || '___________',
+            specialInstructions: params.get('specialInstructions') || '_________________________________________',
             pallets: params.get('pallets') ? params.get('pallets').split(',') : [],
-            items: params.get('items') ? params.get('items').split(',') : []
+            items: params.get('items') ? params.get('items').split(',') : [],
+            quantity: params.get('quantity') ? params.get('quantity').split(',') : [],
+            loadTime: params.get('loadTime') ? params.get('loadTime').split(',') : [],
+            weight: params.get('weight') ? params.get('weight').split(',') : []
         };
     }
 
@@ -169,27 +183,30 @@
     const parametros = obtenerParametros(window.location.search);
 
     // Insertar valores en los lugares correspondientes
+    document.getElementById("date").textContent = parametros.date;
+    document.getElementById("sealNumber").textContent = parametros.sealNumber;
+    document.getElementById("totalLoad").textContent = parametros.totalLoad;
     document.getElementById("fromName").textContent = parametros.fromName;
     document.getElementById("shipTo").textContent = parametros.shipTo;
     document.getElementById("number").textContent = parametros.number;
+    document.getElementById("specialInstructions").textContent = parametros.specialInstructions;
 
     // Obtener referencia a la tabla
     const tbody = document.getElementById("data-table").getElementsByTagName("tbody")[0];
 
-    // Verificar que hay datos en ambos arrays y que tienen la misma cantidad de elementos
-    if (parametros.pallets.length > 0 && parametros.items.length > 0) {
+    // Insertar los datos en la tabla si están disponibles
+    if (parametros.pallets.length > 0) {
         for (let i = 0; i < parametros.pallets.length; i++) {
             let tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${parametros.pallets[i] || ''}</td>
-                <td>Package Data</td>
                 <td>${parametros.items[i] || ''}</td>
-                <td>Weight Data</td>
+                <td>${parametros.quantity[i] || ''}</td>
+                <td>${parametros.loadTime[i] || ''}</td>
+                <td>${parametros.weight[i] || ''}</td>
             `;
             tbody.appendChild(tr);
         }
-    } else {
-        console.log("No se encontraron pallets o items.");
     }
 
     // Imprimir automáticamente
@@ -199,3 +216,4 @@
 </body>
 
 </html>
+
